@@ -1,0 +1,507 @@
+<html style="margin:0;padding:0;">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = `
+    :root{
+      --bg:#0f0f0f;
+      --card:#1a1a1a;
+      --text:#ffffff;
+      --muted:#888888;
+      --accent:#f97316;
+      --accent-soft:rgba(249,115,22,.15);
+      --accent2:#fb923c;
+      --accent2-soft:rgba(251,146,60,.15);
+      --border:rgba(255,255,255,.1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Thai", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    .container{max-width:1400px;margin:0 auto;padding:24px 16px;}
+    .header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+    .brand-title{font-size:32px;font-weight:800;letter-spacing:2px;color:var(--accent);}
+    .header-right{color:var(--muted);font-size:14px;letter-spacing:1px;text-transform:uppercase;}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;}
+    .stat-value{font-size:28px;font-weight:700;margin-bottom:4px;color:var(--accent);}
+    .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+    .search-bar{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;gap:10px;align-items:center;}
+    .search-bar input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:14px;}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+    .chip{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;transition:all .2s;}
+    .chip:hover{border-color:var(--accent);color:var(--text);}
+    .chip.active{border-color:var(--accent);background:var(--accent-soft);color:var(--text);}
+    .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:12px;}
+    table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap;}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--border);}
+    th{color:var(--muted);font-weight:500;text-transform:uppercase;font-size:12px;letter-spacing:0.5px;cursor:pointer;}
+    th:hover{color:var(--accent);}
+    tr:hover{background:rgba(249,115,22,.04);}
+    .cat-badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:500;white-space:nowrap;}
+    .cat-โปรเจคเตอร์{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.4);}
+    .cat-ไฟตัดหมอก{background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.4);}
+    .cat-ไฟเสริม{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.4);}
+    .cat-ฝาโคมไฟ{background:var(--accent-soft);color:#fdba74;border:1px solid var(--accent);}
+    .price-retail{color:#86efac;font-weight:600;}
+    .price-wholesale{color:#fdba74;font-weight:600;}
+    .no-result{padding:40px;text-align:center;color:var(--muted);display:none;}
+    .contact-section{margin-top:32px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;}
+    .contact-title{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:16px;}
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+    .contact-item{display:flex;gap:10px;align-items:flex-start;}
+    .contact-label{font-weight:600;color:var(--muted);min-width:80px;font-size:13px;}
+    .contact-value{font-size:13px;color:var(--text);}
+    @media(max-width:768px){
+      .stats{grid-template-columns:repeat(2,1fr);}
+      th,td{padding:10px 6px;font-size:12px;}
+    }
+  `;
+  document.head.appendChild(s);
+})();
+</script>
+<div style="background-color:transparent;box-sizing:border-box;">
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand-title">ZETA</div>
+    <div class="header-right">PRODUCT CATALOG — อัปเดต 19 ส.ค. 69</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-value" id="totalCount">222</div>
+      <div class="stat-label">สินค้าทั้งหมด</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">16</div>
+      <div class="stat-label">แบรนด์รถ</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">4</div>
+      <div class="stat-label">หมวดหมู่</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="foundCount">222</div>
+      <div class="stat-label">พบ</div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="8"/></svg>
+    <input type="text" id="searchInput" placeholder="ค้นหารุ่น, รหัส, แบรนด์, รุ่นรถ, ราคา...">
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <button class="chip active" data-cat="all">ทั้งหมด</button>
+    <button class="chip" data-cat="โปรเจคเตอร์">โปรเจคเตอร์</button>
+    <button class="chip" data-cat="ไฟตัดหมอก">ไฟตัดหมอก</button>
+    <button class="chip" data-cat="ไฟเสริม">ไฟเสริม</button>
+    <button class="chip" data-cat="ฝาโคมไฟ">ฝาโคมไฟทุกแบรนด์</button>
+    <button class="chip" data-brand="TOYOTA">TOYOTA</button>
+    <button class="chip" data-brand="HONDA">HONDA</button>
+    <button class="chip" data-brand="ISUZU">ISUZU</button>
+    <button class="chip" data-brand="MITSUBISHI">MITSUBISHI</button>
+    <button class="chip" data-brand="FORD">FORD</button>
+    <button class="chip" data-brand="MAZDA">MAZDA</button>
+    <button class="chip" data-brand="NISSAN">NISSAN</button>
+    <button class="chip" data-brand="BENZ">BENZ</button>
+    <button class="chip" data-brand="BMW">BMW</button>
+    <button class="chip" data-brand="อื่นๆ">แบรนด์อื่นๆ</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-sort="model">รุ่น / รหัส</th>
+          <th data-sort="category">หมวดหมู่</th>
+          <th data-sort="brand">แบรนด์</th>
+          <th data-sort="type">ประเภท</th>
+          <th data-sort="spec">รายละเอียด / รุ่นรถ</th>
+          <th data-sort="power">กำลังไฟ</th>
+          <th data-sort="retail">ราคาปลีก</th>
+          <th data-sort="wholesale">ราคาส่ง</th>
+          <th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="no-result" id="noResult">ไม่พบสินค้าที่ตรงกับเงื่อนไขการค้นหา</div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section">
+    <div class="contact-title">ข้อมูลติดต่อ KV Accessories</div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-label">ที่อยู่:</div>
+        <div class="contact-value">222 อาคารศรีวรจักร (B27) ถ.หลวง แขวงป้อมปราบ เขตป้อมปราบฯ กรุงเทพฯ 10100</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">โทรศัพท์:</div>
+        <div class="contact-value">089-446-6041, 089-613-6089</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">แฟกซ์:</div>
+        <div class="contact-value">02-223-1860</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">เว็บไซต์:</div>
+        <div class="contact-value">www.kv-accessories.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Facebook:</div>
+        <div class="contact-value">kvaccessories</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">LINE:</div>
+        <div class="contact-value">@kvaccessories / kv_aee</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  const products = [
+    // โปรเจคเตอร์ & ไฟอื่นๆ ZETA
+    {model:"Z1",category:"โปรเจคเตอร์",brand:"ZETA",type:"โปรเจคเตอร์ Bi-LED",spec:"เลนส์ 2.5 นิ้ว",power:"35W/45W",retail:3990,wholesale:1400,notes:"5,800–6,000K • 9–16V",sR:3990,sW:1400},
+    {model:"Z2",category:"โปรเจคเตอร์",brand:"ZETA",type:"โปรเจคเตอร์ Bi-LED",spec:"เลนส์ 3.0 นิ้ว",power:"45W/55W",retail:4590,wholesale:1600,notes:"5,800–6,000K • 9–16V",sR:4590,sW:1600},
+    {model:"Z3",category:"โปรเจคเตอร์",brand:"ZETA",type:"โปรเจคเตอร์ Bi-LED",spec:"เลนส์ 2.5 นิ้ว",power:"70W/80W",retail:7990,wholesale:2900,notes:"5,800–6,000K • 9–16V • 3 Reflector",sR:7990,sW:2900},
+    {model:"Z4",category:"โปรเจคเตอร์",brand:"ZETA",type:"โปรเจคเตอร์ Bi-LED",spec:"เลนส์ 3.0 นิ้ว",power:"70W/80W",retail:7990,wholesale:2900,notes:"5,800–6,000K • 9–16V • 3 Reflector",sR:7990,sW:2900},
+    {model:"Matrix M5",category:"โปรเจคเตอร์",brand:"ZETA",type:"โปรเจคเตอร์ Bi-LED",spec:"เลนส์ 1.5 นิ้ว",power:"45W/55W",retail:3900,wholesale:1400,notes:"6,000K • 2 Reflector • แบรนด์ KUS",sR:3900,sW:1400},
+    {model:"GW-1 (1 สี)",category:"ไฟตัดหมอก",brand:"ZETA",type:"ไฟตัดหมอก",spec:"เลนส์ 2.0 นิ้ว",power:"30W/40W",retail:4290,wholesale:2000,notes:"สีขาว • 9–16V • สำหรับ Toyota",sR:4290,sW:2000},
+    {model:"GW-1 (3 สี)",category:"ไฟตัดหมอก",brand:"ZETA",type:"ไฟตัดหมอก",spec:"เลนส์ 2.0 นิ้ว",power:"30W/40W",retail:4490,wholesale:2100,notes:"ขาว/วอม/เหลือง • 9–16V • สำหรับ Toyota",sR:4490,sW:2100},
+    {model:"GW-3 (1 สี)",category:"ไฟตัดหมอก",brand:"ZETA",type:"ไฟตัดหมอก",spec:"เลนส์ 3.0 นิ้ว",power:"50W/60W",retail:4790,wholesale:2300,notes:"สีขาว • 9–16V • สำหรับ Toyota",sR:4790,sW:2300},
+    {model:"GW-3 (3 สี)",category:"ไฟตัดหมอก",brand:"ZETA",type:"ไฟตัดหมอก",spec:"เลนส์ 3.0 นิ้ว",power:"50W/60W",retail:4990,wholesale:2400,notes:"ขาว/วอม/เหลือง • 9–16V • สำหรับ Toyota",sR:4990,sW:2400},
+    {model:"GS-1",category:"ไฟเสริม",brand:"ZETA",type:"ไฟเสริม",spec:"—",power:"60W/90W",retail:4790,wholesale:2200,notes:"6,000K • 9–16V",sR:4790,sW:2200},
+    {model:"ZT-3",category:"ไฟเสริม",brand:"ZETA",type:"ไฟเสริม",spec:"—",power:"70W/100W",retail:4590,wholesale:2000,notes:"5,500K • 9–16V • 10.7×3.3×7.2 ซม.",sR:4590,sW:2000},
+    // ฝาโคมไฟ TOYOTA
+    {model:"TOY-1",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Toyota Vigo (05-08)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-2",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Toyota Vigo (09-11)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-3",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Toyota Vigo (12-15)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-4",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Toyota Revo Halogen (15-18)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-5",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Toyota Revo Projector (15-18)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ TOYOTA",sR:999999,sW:1800},
+    {model:"TOY-6",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Fortuner (05-08)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ TOYOTA",sR:999999,sW:2000},
+    {model:"TOY-7",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Fortuner (08-11)",power:"—",retail:"—",wholesale:1450,notes:"แบรนด์ TOYOTA",sR:999999,sW:1450},
+    {model:"TOY-8",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Fortuner (11-15)",power:"—",retail:"—",wholesale:1450,notes:"แบรนด์ TOYOTA",sR:999999,sW:1450},
+    {model:"TOY-9",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Fortuner (16-20)",power:"—",retail:"—",wholesale:2300,notes:"แบรนด์ TOYOTA",sR:999999,sW:2300},
+    {model:"TOY-10",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"VIOS (03-06) G1",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ TOYOTA",sR:999999,sW:1300},
+    {model:"TOY-11",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"VIOS (08-11)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-12",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"VIOS (14-15)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-13",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"VIOS (16-18)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-14",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"VIOS (19-21) ตัวท็อป",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ TOYOTA",sR:999999,sW:2000},
+    {model:"TOY-15",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"YARIS/VITZ (08-11)",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ TOYOTA",sR:999999,sW:1300},
+    {model:"TOY-16",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"YARIS (14-16)",power:"—",retail:"—",wholesale:1450,notes:"แบรนด์ TOYOTA",sR:999999,sW:1450},
+    {model:"TOY-17",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"YARIS (16-19)",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ TOYOTA",sR:999999,sW:1700},
+    {model:"TOY-18",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"YARIS (19-21) LED",power:"—",retail:"—",wholesale:2100,notes:"แบรนด์ TOYOTA",sR:999999,sW:2100},
+    {model:"TOY-19",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Altis (03-07)",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ TOYOTA",sR:999999,sW:1000},
+    {model:"TOY-20",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Altis (10-13)",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ TOYOTA",sR:999999,sW:1000},
+    {model:"TOY-21",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Altis (14-16)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-22",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Altis (16-18)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ TOYOTA",sR:999999,sW:1800},
+    {model:"TOY-23",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY (06-08) ACV40",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ TOYOTA",sR:999999,sW:1000},
+    {model:"TOY-24",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY (09-11) ACV41",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ TOYOTA",sR:999999,sW:1000},
+    {model:"TOY-25",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY (12-14) ACV50",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ TOYOTA",sR:999999,sW:1100},
+    {model:"TOY-26",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY (15-17) ACV51",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ TOYOTA",sR:999999,sW:1200},
+    {model:"TOY-27",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY (18-21)",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ TOYOTA",sR:999999,sW:1700},
+    {model:"TOY-28",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Alphard (03-05)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ TOYOTA",sR:999999,sW:3500},
+    {model:"TOY-29",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Alphard (06-07)",power:"—",retail:"—",wholesale:4000,notes:"แบรนด์ TOYOTA",sR:999999,sW:4000},
+    {model:"TOY-30",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Alphard (08-14)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ TOYOTA",sR:999999,sW:3500},
+    {model:"TOY-31",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Alphard (15-17)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ TOYOTA",sR:999999,sW:3200},
+    {model:"TOY-32",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Alphard (18-23)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ TOYOTA",sR:999999,sW:3500},
+    {model:"TOY-33",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Vellfire (08-14)",power:"—",retail:"—",wholesale:4000,notes:"แบรนด์ TOYOTA",sR:999999,sW:4000},
+    {model:"TOY-34",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Vellfire (15-17)",power:"—",retail:"—",wholesale:4500,notes:"แบรนด์ TOYOTA",sR:999999,sW:4500},
+    {model:"TOY-35",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Innova (12-14)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ TOYOTA",sR:999999,sW:1800},
+    {model:"TOY-36",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CHR (18-20)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ TOYOTA",sR:999999,sW:2800},
+    {model:"TOY-37",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Estima (03-05)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ TOYOTA",sR:999999,sW:2000},
+    {model:"TOY-38",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Estima (06-08)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ TOYOTA",sR:999999,sW:1600},
+    {model:"TOY-39",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Estima (09-15)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ TOYOTA",sR:999999,sW:1600},
+    {model:"TOY-40",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Prius (10-12) Halogen",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-41",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Prius (10-12) LED",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ TOYOTA",sR:999999,sW:1700},
+    {model:"TOY-42",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"WISH (02-04)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-43",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"WISH (05-08)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-44",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Commuter (10-13)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-45",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Commuter (14-18)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-46",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Innova (05-11)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ TOYOTA",sR:999999,sW:1500},
+    {model:"TOY-47",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY ACV30 (02-04)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ TOYOTA",sR:999999,sW:1400},
+    {model:"TOY-48",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Altis (07-09)",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ TOYOTA",sR:999999,sW:1300},
+    {model:"TOY-49",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla (19-22)",power:"—",retail:"—",wholesale:2600,notes:"แบรนด์ TOYOTA",sR:999999,sW:2600},
+    {model:"TOY-50",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Corolla Cross (22-24)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ TOYOTA",sR:999999,sW:2200},
+    {model:"TOY-51",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Avanza (08-12)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ TOYOTA",sR:999999,sW:1600},
+    {model:"TOY-52",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"Avanza (12-18)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ TOYOTA",sR:999999,sW:1800},
+    {model:"TOY-53",category:"ฝาโคมไฟ",brand:"TOYOTA",type:"ฝาโคมไฟ",spec:"CAMRY ACV30 (05-06)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ TOYOTA",sR:999999,sW:1400},
+    // ฝาโคมไฟ HONDA
+    {model:"HON-1",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CITY (06-08)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ HONDA",sR:999999,sW:1200},
+    {model:"HON-2",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CITY (09-14)",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ HONDA",sR:999999,sW:1000},
+    {model:"HON-3",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CITY (15-17)",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ HONDA",sR:999999,sW:1000},
+    {model:"HON-4",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CITY (18-20)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ HONDA",sR:999999,sW:1800},
+    {model:"HON-5",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"JAZZ GD (04-08)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-5 TH",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"JAZZ GD (04-08) มีไฟหรี่",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ HONDA",sR:999999,sW:1400},
+    {model:"HON-6",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"JAZZ GB (08-10)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-7",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"JAZZ GE (11-13)",power:"—",retail:"—",wholesale:1000,notes:"แบรนด์ HONDA",sR:999999,sW:1000},
+    {model:"HON-8",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"JAZZ GK (14-17)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ HONDA",sR:999999,sW:1200},
+    {model:"HON-9",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Civic FD (06-11)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-10",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Civic FB (12-15)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-11",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Civic FC/FK (16-21) รุ่นล่าง",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ HONDA",sR:999999,sW:1500},
+    {model:"HON-12",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Civic FC/FK (16-21) รุ่นท็อป",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ HONDA",sR:999999,sW:1500},
+    {model:"HON-13",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Accord G7 (03-07)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-14",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Accord G8 (07-12)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-15",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Accord G9 (13-15)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ HONDA",sR:999999,sW:1200},
+    {model:"HON-16",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Accord G9 MC (16-18)",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ HONDA",sR:999999,sW:1700},
+    {model:"HON-17",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V G2 (05-06)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ HONDA",sR:999999,sW:1200},
+    {model:"HON-18",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V G3 (07-11)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ HONDA",sR:999999,sW:1100},
+    {model:"HON-19",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V G4 (12-14)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ HONDA",sR:999999,sW:1200},
+    {model:"HON-20",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V G4 (15-16)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ HONDA",sR:999999,sW:1500},
+    {model:"HON-21",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V G5 (17-21)",power:"—",retail:"—",wholesale:1900,notes:"แบรนด์ HONDA",sR:999999,sW:1900},
+    {model:"HON-22",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CR-V (22-24)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ HONDA",sR:999999,sW:3200},
+    {model:"HON-23",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"HRV Halogen (12-18)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ HONDA",sR:999999,sW:1400},
+    {model:"HON-24",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"HRV Projector (12-18)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ HONDA",sR:999999,sW:1600},
+    {model:"HON-25",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"HRV Halogen (19-21)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ HONDA",sR:999999,sW:1600},
+    {model:"HON-26",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"HRV (19-21) รุ่นท็อป",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ HONDA",sR:999999,sW:1700},
+    {model:"HON-27",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"BR-V (18-22)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ HONDA",sR:999999,sW:2200},
+    {model:"HON-28",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"CIVIC ES (03-05)",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ HONDA",sR:999999,sW:1300},
+    {model:"HON-29",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Freed (11-14)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ HONDA",sR:999999,sW:2000},
+    {model:"HON-30",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Brio (11-13)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ HONDA",sR:999999,sW:1600},
+    {model:"HON-31",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"City (21-24)",power:"—",retail:"—",wholesale:3300,notes:"แบรนด์ HONDA",sR:999999,sW:3300},
+    {model:"HON-32",category:"ฝาโคมไฟ",brand:"HONDA",type:"ฝาโคมไฟ",spec:"Odyssey (09-13)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ HONDA",sR:999999,sW:1500},
+    // ฝาโคมไฟ ISUZU
+    {model:"ISU-1",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (07-11)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ ISUZU",sR:999999,sW:1400},
+    {model:"ISU-2",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (12-16)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ ISUZU",sR:999999,sW:1600},
+    {model:"ISU-3",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (19-20)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ ISUZU",sR:999999,sW:1800},
+    {model:"ISU-4",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (21-23)",power:"—",retail:"—",wholesale:1900,notes:"แบรนด์ ISUZU",sR:999999,sW:1900},
+    {model:"ISU-5",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (17-18) รุ่นสูง",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ ISUZU",sR:999999,sW:1800},
+    {model:"ISU-6",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (02-06)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ ISUZU",sR:999999,sW:1100},
+    {model:"ISU-7",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (24-25)",power:"—",retail:"—",wholesale:2400,notes:"แบรนด์ ISUZU",sR:999999,sW:2400},
+    {model:"ISU-8",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (17-18) รุ่นล่าง",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ ISUZU",sR:999999,sW:1600},
+    {model:"ISU-9",category:"ฝาโคมไฟ",brand:"ISUZU",type:"ฝาโคมไฟ",spec:"D-Max (07-11) รุ่นล่าง",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ ISUZU",sR:999999,sW:1100},
+    // ฝาโคมไฟ MITSUBISHI
+    {model:"MIT-1",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Triton (10-14)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:1400},
+    {model:"MIT-2",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Pajero Sport (13-15)",power:"—",retail:"—",wholesale:1900,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:1900},
+    {model:"MIT-3",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Space Wagon (03-11)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:1800},
+    {model:"MIT-4",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Pajero Montero (16-19)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:3200},
+    {model:"MIT-5",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Triton (15-18)",power:"—",retail:"—",wholesale:2400,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:2400},
+    {model:"MIT-6",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Triton (20-22)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:3500},
+    {model:"MIT-7",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Triton (23-25)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:3500},
+    {model:"MIT-8",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Attrage/Mirage G4 (13-16)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:2000},
+    {model:"MIT-9",category:"ฝาโคมไฟ",brand:"MITSUBISHI",type:"ฝาโคมไฟ",spec:"Attrage/Mirage G4 (21-23)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ MITSUBISHI",sR:999999,sW:2000},
+    // ฝาโคมไฟ FORD
+    {model:"FOR-1",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Ranger/Everest (11-15)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ FORD",sR:999999,sW:1600},
+    {model:"FOR-2",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Ranger/Everest (16-21)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ FORD",sR:999999,sW:1600},
+    {model:"FOR-3",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Ranger/Everest (22-24)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ FORD",sR:999999,sW:3000},
+    {model:"FOR-4",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Fiesta (09-12)",power:"—",retail:"—",wholesale:1150,notes:"แบรนด์ FORD",sR:999999,sW:1150},
+    {model:"FOR-5",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Focus (12-15)",power:"—",retail:"—",wholesale:1150,notes:"แบรนด์ FORD",sR:999999,sW:1150},
+    {model:"FOR-6",category:"ฝาโคมไฟ",brand:"FORD",type:"ฝาโคมไฟ",spec:"Ecosport (13-16)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ FORD",sR:999999,sW:1600},
+    // ฝาโคมไฟ MAZDA
+    {model:"MAZ-1",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda 2 (07-14)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ MAZDA",sR:999999,sW:1100},
+    {model:"MAZ-2",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda 2 (15-18)",power:"—",retail:"—",wholesale:2600,notes:"แบรนด์ MAZDA",sR:999999,sW:2600},
+    {model:"MAZ-3",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda 3 BK (06-09)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ MAZDA",sR:999999,sW:1100},
+    {model:"MAZ-4",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda 3 (10-12) TOP",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ MAZDA",sR:999999,sW:1200},
+    {model:"MAZ-5",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda 3 (13-16) LOW",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ MAZDA",sR:999999,sW:1300},
+    {model:"MAZ-6",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda CX-5 (11-15)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ MAZDA",sR:999999,sW:1500},
+    {model:"MAZ-7",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda CX-5 (17-21)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ MAZDA",sR:999999,sW:1800},
+    {model:"MAZ-8",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda CX-3 (18-19)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ MAZDA",sR:999999,sW:3200},
+    {model:"MAZ-9",category:"ฝาโคมไฟ",brand:"MAZDA",type:"ฝาโคมไฟ",spec:"Mazda BT-50 Pro (12-15)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ MAZDA",sR:999999,sW:1500},
+    // ฝาโคมไฟ NISSAN
+    {model:"NIS-1",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Navara (05-14)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ NISSAN",sR:999999,sW:1500},
+    {model:"NIS-2",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Navara (15-16)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ NISSAN",sR:999999,sW:2000},
+    {model:"NIS-3",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Teana J31 (06-07)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ NISSAN",sR:999999,sW:1100},
+    {model:"NIS-4",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Teana J32 (08-10)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ NISSAN",sR:999999,sW:1100},
+    {model:"NIS-5",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Teana J31 (11-12)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ NISSAN",sR:999999,sW:1200},
+    {model:"NIS-6",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Teana L33 (13-15)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ NISSAN",sR:999999,sW:1200},
+    {model:"NIS-7",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"X-Trail (07-12)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ NISSAN",sR:999999,sW:1600},
+    {model:"NIS-8",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"X-Trail (14-16)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ NISSAN",sR:999999,sW:1600},
+    {model:"NIS-9",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Almera (11-13)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ NISSAN",sR:999999,sW:1100},
+    {model:"NIS-10",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Almera (14-16)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ NISSAN",sR:999999,sW:1100},
+    {model:"NIS-11",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"March (10-15)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ NISSAN",sR:999999,sW:1100},
+    {model:"NIS-12",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"Sylphy (12-15)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ NISSAN",sR:999999,sW:1200},
+    {model:"NIS-13",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"TIIDA (05-07)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ NISSAN",sR:999999,sW:1200},
+    {model:"NIS-14",category:"ฝาโคมไฟ",brand:"NISSAN",type:"ฝาโคมไฟ",spec:"TIIDA (08-10)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ NISSAN",sR:999999,sW:1200},
+    // ฝาโคมไฟ BENZ
+    {model:"BEN-1",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"A-CLASS W176 (12-16)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BENZ",sR:999999,sW:2500},
+    {model:"BEN-2",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"A-CLASS W176 (16-18)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BENZ",sR:999999,sW:2500},
+    {model:"BEN-3",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W203 (03-08)",power:"—",retail:"—",wholesale:1300,notes:"แบรนด์ BENZ",sR:999999,sW:1300},
+    {model:"BEN-4",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W204 (07-11)",power:"—",retail:"—",wholesale:1600,notes:"แบรนด์ BENZ",sR:999999,sW:1600},
+    {model:"BEN-5",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W204 (11-14)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ BENZ",sR:999999,sW:1200},
+    {model:"BEN-6",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W205 (15-17)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ BENZ",sR:999999,sW:1800},
+    {model:"BEN-7",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W205 (19-21)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BENZ",sR:999999,sW:2000},
+    {model:"BEN-8",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W117 (13-16)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BENZ",sR:999999,sW:2000},
+    {model:"BEN-9",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"C-CLASS W117 (16-19)",power:"—",retail:"—",wholesale:2600,notes:"แบรนด์ BENZ",sR:999999,sW:2600},
+    {model:"BEN-10",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"E-CLASS W211 (05-08)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ BENZ",sR:999999,sW:1200},
+    {model:"BEN-11",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"E-CLASS W212 (14-15)",power:"—",retail:"—",wholesale:1700,notes:"แบรนด์ BENZ",sR:999999,sW:1700},
+    {model:"BEN-12",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"E-CLASS W207 E-Coupe",power:"—",retail:"—",wholesale:3800,notes:"แบรนด์ BENZ",sR:999999,sW:3800},
+    {model:"BEN-13",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLA-CLASS W156 (14-17)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ BENZ",sR:999999,sW:2200},
+    {model:"BEN-14",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLA-CLASS W156 (18-20)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ BENZ",sR:999999,sW:2200},
+    {model:"BEN-15",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"S-CLASS W221 (06-09)",power:"—",retail:"—",wholesale:2400,notes:"แบรนด์ BENZ",sR:999999,sW:2400},
+    {model:"BEN-16",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"S-CLASS W221 (10-14)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BENZ",sR:999999,sW:2000},
+    {model:"BEN-17",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"S-CLASS W222 (14-16)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BENZ",sR:999999,sW:3000},
+    {model:"BEN-18",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"S-CLASS W222 (17-20)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BENZ",sR:999999,sW:2500},
+    {model:"BEN-19",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLC W253 (15-19)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BENZ",sR:999999,sW:2500},
+    {model:"BEN-20",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLC W253 (19-22)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ BENZ",sR:999999,sW:2800},
+    {model:"BEN-21",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLE W166 (15-17)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BENZ",sR:999999,sW:3000},
+    {model:"BEN-22",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"GLE W167 (18-22)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ BENZ",sR:999999,sW:3200},
+    {model:"BEN-23",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"Vito W639 (04-10)",power:"—",retail:"—",wholesale:2100,notes:"แบรนด์ BENZ",sR:999999,sW:2100},
+    {model:"BEN-24",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"Vito W636 (11-14)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BENZ",sR:999999,sW:3000},
+    {model:"BEN-25",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"W218 (10-15)",power:"—",retail:"—",wholesale:3200,notes:"แบรนด์ BENZ",sR:999999,sW:3200},
+    {model:"BEN-26",category:"ฝาโคมไฟ",brand:"BENZ",type:"ฝาโคมไฟ",spec:"W210 (01-04)",power:"—",retail:"—",wholesale:1400,notes:"แบรนด์ BENZ",sR:999999,sW:1400},
+    // ฝาโคมไฟ BMW
+    {model:"BMW-1",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 1 F20/F21 (11-14)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BMW",sR:999999,sW:2500},
+    {model:"BMW-2",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 1 F20 LCI (15-19)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ BMW",sR:999999,sW:2200},
+    {model:"BMW-3",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 E46 (98-01)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ BMW",sR:999999,sW:1200},
+    {model:"BMW-4",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 E46 (02-05)",power:"—",retail:"—",wholesale:1200,notes:"แบรนด์ BMW",sR:999999,sW:1200},
+    {model:"BMW-5",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 E90/E91 (05-12) LOW",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-6",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 E90/E91 (05-12) HIGH",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-7",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 E92/E93 (06-09)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-8",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 F30/F35 (13-15)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-9",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 F30/F35 (16-18)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-10",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 G20 (19-22)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BMW",sR:999999,sW:2500},
+    {model:"BMW-11",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3 G20 (23-24)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ BMW",sR:999999,sW:2800},
+    {model:"BMW-12",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3GT F34 (13-15)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BMW",sR:999999,sW:3000},
+    {model:"BMW-13",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 3GT F34 (16-20)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BMW",sR:999999,sW:3000},
+    {model:"BMW-14",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 4 F32 (13-16)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ BMW",sR:999999,sW:2800},
+    {model:"BMW-15",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 4 F32 (17-20)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BMW",sR:999999,sW:2500},
+    {model:"BMW-16",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 5 E60 (04-10)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ BMW",sR:999999,sW:1800},
+    {model:"BMW-17",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"F10/F18 (11-16)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-18",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 5 G30 (17-19)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-19",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 5 G30 (20-23)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ BMW",sR:999999,sW:1500},
+    {model:"BMW-20",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 7 E65 (02-05)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ BMW",sR:999999,sW:2200},
+    {model:"BMW-21",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 7 E65 (05-08)",power:"—",retail:"—",wholesale:2200,notes:"แบรนด์ BMW",sR:999999,sW:2200},
+    {model:"BMW-22",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 7 F01 (08-15)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-23",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 7 G11 (15-18)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-24",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Series 7 G11 (19-22)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ BMW",sR:999999,sW:3000},
+    {model:"BMW-25",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X1 E84 (09-15)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-26",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X1 F48 (16-18)",power:"—",retail:"—",wholesale:2700,notes:"แบรนด์ BMW",sR:999999,sW:2700},
+    {model:"BMW-27",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X1 F48 (19-22)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ BMW",sR:999999,sW:3500},
+    {model:"BMW-28",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X3 E83 (04-10)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ BMW",sR:999999,sW:3500},
+    {model:"BMW-29",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X3 F25 (11-13)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-30",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X3 F25 (14-17)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ BMW",sR:999999,sW:2000},
+    {model:"BMW-31",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X3/X4 G01 (18-21)",power:"—",retail:"—",wholesale:2700,notes:"แบรนด์ BMW",sR:999999,sW:2700},
+    {model:"BMW-32",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X5 E70 (08-13)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ BMW",sR:999999,sW:1800},
+    {model:"BMW-33",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X5 F15 (13-18)",power:"—",retail:"—",wholesale:2700,notes:"แบรนด์ BMW",sR:999999,sW:2700},
+    {model:"BMW-34",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"X6 E71 (06-14)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ BMW",sR:999999,sW:2800},
+    {model:"BMW-35",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Z4 E85 (04-08)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ BMW",sR:999999,sW:3500},
+    {model:"BMW-36",category:"ฝาโคมไฟ",brand:"BMW",type:"ฝาโคมไฟ",spec:"Z4 E89 (09-18)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ BMW",sR:999999,sW:2500},
+    // แบรนด์อื่นๆ
+    {model:"SUB-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"SUBARU Impreza (03-05)",power:"—",retail:"—",wholesale:3500,notes:"แบรนด์ SUBARU",sR:999999,sW:3500},
+    {model:"SUB-2",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"SUBARU XV (12-16)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ SUBARU",sR:999999,sW:2000},
+    {model:"MINI-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"MINI R56 (09-13)",power:"—",retail:"—",wholesale:3400,notes:"แบรนด์ MINI",sR:999999,sW:3400},
+    {model:"MINI-2",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"MINI F55/F56 (14-18)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ MINI",sR:999999,sW:3000},
+    {model:"MINI-3",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"MINI R60 (17-21)",power:"—",retail:"—",wholesale:3000,notes:"แบรนด์ MINI",sR:999999,sW:3000},
+    {model:"HYU-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"HYUNDAI H1 (10-13)",power:"—",retail:"—",wholesale:1800,notes:"แบรนด์ HYUNDAI",sR:999999,sW:1800},
+    {model:"HYU-2",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"HYUNDAI H1 (18-20)",power:"—",retail:"—",wholesale:2800,notes:"แบรนด์ HYUNDAI",sR:999999,sW:2800},
+    {model:"CHE-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Colorado (12-15)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ CHEVROLET",sR:999999,sW:2000},
+    {model:"CHE-2",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Trailblazer (12-15)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ CHEVROLET",sR:999999,sW:2000},
+    {model:"CHE-3",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Trailblazer (16-19)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ CHEVROLET",sR:999999,sW:2500},
+    {model:"CHE-4",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Captiva (09-10)",power:"—",retail:"—",wholesale:2400,notes:"แบรนด์ CHEVROLET",sR:999999,sW:2400},
+    {model:"CHE-5",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Captiva (11-15)",power:"—",retail:"—",wholesale:2500,notes:"แบรนด์ CHEVROLET",sR:999999,sW:2500},
+    {model:"CHE-6",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"CHEVROLET Cruze (09-14)",power:"—",retail:"—",wholesale:1100,notes:"แบรนด์ CHEVROLET",sR:999999,sW:1100},
+    {model:"TES-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"TESLA Model 3/Y (21-23)",power:"—",retail:"—",wholesale:2000,notes:"แบรนด์ TESLA",sR:999999,sW:2000},
+    {model:"VOL-1",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"VOLVO XC60 (09-13)",power:"—",retail:"—",wholesale:1500,notes:"แบรนด์ VOLVO",sR:999999,sW:1500},
+    {model:"VOL-2",category:"ฝาโคมไฟ",brand:"อื่นๆ",type:"ฝาโคมไฟ",spec:"VOLVO XC90 (15-23)",power:"—",retail:"—",wholesale:2600,notes:"แบรนด์ VOLVO",sR:999999,sW:2600}
+  ];
+
+  let currentCat = "all", currentBrand = null, currentSearch = "", currentSort = {key:"model",dir:"asc"};
+
+  function render(){
+    let filtered = products.filter(function(p){
+      if(currentCat !== "all" && p.category !== currentCat) return false;
+      if(currentBrand && p.brand !== currentBrand) return false;
+      if(currentSearch){
+        var hay = (p.model+" "+p.category+" "+p.brand+" "+p.type+" "+p.spec+" "+p.power+" "+p.wholesale+" "+p.notes).toLowerCase();
+        if(!hay.includes(currentSearch)) return false;
+      }
+      return true;
+    });
+
+    filtered.sort(function(a,b){
+      var av, bv;
+      if(currentSort.key === "retail"){ av = a.sR; bv = b.sR; }
+      else if(currentSort.key === "wholesale"){ av = a.sW; bv = b.sW; }
+      else { av = a[currentSort.key]; bv = b[currentSort.key]; }
+      if(typeof av === "number" && typeof bv === "number"){
+        return currentSort.dir === "asc" ? av - bv : bv - av;
+      }
+      if(av < bv) return currentSort.dir === "asc" ? -1 : 1;
+      if(av > bv) return currentSort.dir === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    document.getElementById("foundCount").textContent = filtered.length;
+    if(filtered.length === 0){
+      document.getElementById("tableBody").innerHTML = "";
+      document.getElementById("noResult").style.display = "block";
+      return;
+    }
+    document.getElementById("noResult").style.display = "none";
+
+    document.getElementById("tableBody").innerHTML = filtered.map(function(p){
+      var catClass = "cat-" + p.category;
+      var retailHtml = p.retail === "—" ? '<span style="color:#555">—</span>' : p.retail.toLocaleString();
+      var wholesaleHtml = p.wholesale.toLocaleString();
+      return '<tr>' +
+        '<td style="font-weight:600;white-space:nowrap">' + p.model + '</td>' +
+        '<td><span class="cat-badge ' + catClass + '">' + p.category + '</span></td>' +
+        '<td style="color:#fdba74;font-weight:500">' + p.brand + '</td>' +
+        '<td>' + p.type + '</td>' +
+        '<td style="font-size:12px;color:#aaa">' + p.spec + '</td>' +
+        '<td style="font-size:12px">' + p.power + '</td>' +
+        '<td class="price-retail">' + retailHtml + '</td>' +
+        '<td class="price-wholesale">' + wholesaleHtml + '</td>' +
+        '<td style="font-size:12px;line-height:1.4;max-width:280px;white-space:normal">' + p.notes + '</td>' +
+        '</tr>';
+    }).join("");
+  }
+
+  // Search
+  document.getElementById("searchInput").addEventListener("input", function(e){
+    currentSearch = e.target.value.toLowerCase().trim();
+    render();
+  });
+
+  // Filter by category
+  document.querySelectorAll('.chip[data-cat]').forEach(function(chip){
+    chip.addEventListener("click", function(){
+      document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      currentCat = chip.dataset.cat;
+      currentBrand = null;
+      render();
+    });
+  });
+
+  // Filter by brand
+  document.querySelectorAll('.chip[data-brand]').forEach(function(chip){
+    chip.addEventListener("click", function(){
+      document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      currentCat = "ฝาโคมไฟ";
+      currentBrand = chip.dataset.brand;
+      render();
+    });
+  });
+
+  // Sort
+  document.querySelectorAll("th[data-sort]").forEach(function(th){
+    th.addEventListener("click", function(){
+      var key = th.dataset.sort;
+      currentSort.dir = (currentSort.key === key && currentSort.dir === "asc") ? "desc" : "asc";
+      currentSort.key = key;
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</html>
